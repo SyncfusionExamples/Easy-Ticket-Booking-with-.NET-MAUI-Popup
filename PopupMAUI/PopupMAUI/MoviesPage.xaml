@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+                      xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+                      x:Class="PopupMAUI.MoviesPage"
+                      xmlns:local="clr-namespace:PopupMAUI"
+                        xmlns:sfgrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
+             xmlns:syncfusion="clr-namespace:Syncfusion.Maui.ListView;assembly=Syncfusion.Maui.ListView"
+                      xmlns:popup="clr-namespace:Syncfusion.Maui.Popup;assembly=Syncfusion.Maui.Popup">
+    <ContentPage.Resources>
+        <popup:SfPopup x:Key="BookingNotification"
+                       x:Name="bookingNotification"
+                       ShowFooter="False"
+                       HeaderTitle="Book Tickets !"
+                       ShowCloseButton="True"
+                       HeightRequest="130"
+                       Message="Click on the book button to start booking tickets"
+                       StaysOpen="True">
+        </popup:SfPopup>
+    </ContentPage.Resources>
+
+    <ContentPage.BindingContext>
+        <local:TicketBookingViewModel x:Name="viewModel" />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <syncfusion:SfListView x:Name="listView"                                                          
+                            ItemsSource="{Binding TheaterInformation}"                                                       
+                            SelectionMode="None"
+                        ItemSize="110">
+            <syncfusion:SfListView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout x:Name="mainLayout"
+            Orientation="Horizontal"
+            Margin="0,10,0,10">
+                        <Image x:Name="movieImage"
+        Source="{Binding MovieImage}"
+        WidthRequest="90"
+                            HeightRequest="90"
+        VerticalOptions="FillAndExpand"
+                            Aspect="Fill"
+        Margin="16,0,0,0" />
+                        <StackLayout x:Name="detailsLayout"
+                Orientation="Vertical" HeightRequest="90"
+                Margin="12,0,0,0">
+                            <Label Text="{Binding MovieName}"
+            Opacity="100"
+            FontAttributes="Bold"
+            FontSize="15"
+            TextColor="Black"
+            HorizontalOptions="StartAndExpand"
+            VerticalOptions="Center"
+            Margin="0,0,0,8" />
+                            <Label Text="{Binding Cast}"
+            Opacity="54"
+            FontSize="12"
+            TextColor="Black"
+            HorizontalOptions="StartAndExpand"
+            VerticalOptions="Center"
+            Margin="0,0,0,10" />
+                            <StackLayout Orientation="Horizontal">
+                                <Border Stroke="#79747E"
+                    Margin="0,0,7,0"
+                    Opacity="80">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Label Text="2D"
+                    WidthRequest="42"
+                    TextColor="Black"
+                    HeightRequest="32"
+                    Opacity="54"
+                    FontSize="10"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    />
+                                </Border>
+                                <Border Stroke="#79747E"
+                    Opacity="80">
+                                    <Border.StrokeShape>
+                                        <RoundRectangle CornerRadius="8" />
+                                    </Border.StrokeShape>
+                                    <Label Text="3D"
+                    WidthRequest="42"
+                    TextColor="Black"
+                    HeightRequest="32"
+                    Opacity="54"
+                    FontSize="10"
+                    HorizontalTextAlignment="Center"
+                    VerticalTextAlignment="Center"
+                    />
+                                </Border>
+                            </StackLayout>
+                        </StackLayout>
+                        <Button x:Name="bookbutton"
+            Command="{Binding BookingCommand, Source={x:Reference viewModel}}" 
+            CommandParameter="{x:Reference listView}"
+            Text="Book"     
+            Opacity="100"
+            CornerRadius="20"
+            VerticalOptions="CenterAndExpand"
+            HorizontalOptions="EndAndExpand"
+            HeightRequest="40"
+            FontSize="14"
+            WidthRequest="70"
+            BackgroundColor="#6750A4"
+            TextColor="White"
+            Margin="10,0,12,10"/>
+                    </StackLayout>
+                </DataTemplate>
+            </syncfusion:SfListView.ItemTemplate>
+        </syncfusion:SfListView>
+    </ContentPage.Content>
+    <ContentPage.Behaviors>
+        <local:PopupCustomizationsBehavior />
+    </ContentPage.Behaviors>
+</ContentPage>
